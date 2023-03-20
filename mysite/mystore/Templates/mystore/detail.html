@@ -1,0 +1,58 @@
+{% extends 'mystore/main.html' %}
+{% load static %}
+{% block content %}
+<div class='row pb-3'>
+    <a href="{% url 'mystore' %}">
+        <i class="bi bi-arrow-left" style='font-size: 30px; color:black'></i>
+    </a>
+</div>
+<h1>{{ product.name }}</h1>
+<div class="row">
+    <div class="col-md-8">
+        <img class="card-img-top" src='{{product.image.url}}' width='100%'>
+    </div>
+    <div class="col-md-4">
+        <h5>Description:</h5>
+        <p>{{product.description}}</p>
+        <br>
+        <div class = 'row'>
+            <div class = 'col-6'>
+                <h4>Price: ${{product.price}}</h4>
+            </div>
+            <div class = 'col-6'>
+                <button data-product="{{product.id}}" data-action="add" class="btn btn-warning update-cart w-100"><strong>Add to Cart</strong></button>
+            </div>
+        </div>
+        
+        <br>
+        <h5>Reviews</h5>
+        <ul class = 'list-group'>
+            {% for comment in product.comments.all %}
+            <li class = 'list-group-item'>
+                <div class = 'row'>
+                    <div class = 'col-4'>
+                        <h6>{{ comment.author }}</h5>
+                    </div>
+                    <div class = 'col-8'>
+                        <p><small>{{ comment.created_on }}</small></p>
+                        <p>{{ comment.body }}</p>  
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <br>
+        <h5>Leave a review:</h5>
+        <form action="/{{ product.id }}/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.author }}
+            </div>
+            <div class="form-group">
+                {{ form.body }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

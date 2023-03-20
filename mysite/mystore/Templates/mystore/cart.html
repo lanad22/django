@@ -1,0 +1,84 @@
+{% extends 'mystore/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class='row'>
+    <a href="{% url 'mystore' %}">
+        <i class="bi bi-arrow-left" style='font-size: 30px; color:black'></i>
+    </a>
+</div>
+<h4 class='pt-4'>Shopping Cart</h4>
+<div class='pt-2 row'>
+    <div class="col-8">
+        <ul class="list-group">
+            <li class=list-group-item>
+                <div class='row'>
+                    <div class="col-3"></div>
+                    <div class="col-3"><strong>Name</strong></div>
+                    <div class="col-2"><strong>Price</strong></div>
+                    <div class="col-2"><strong>Quantity</strong></div>
+                    <div class="col-2"><strong>Subtotal</strong></div>
+            </li>
+            {% if not order.get_cart_items %}
+            <li class="list-group-item" style='text-align: center'>
+                <i class="bi bi-cart-x-fill" style="font-size: 50px"></i>
+                <h5>Empty cart</h5>
+            </li>
+            {% else %}
+            {% for item in items %}
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class="col-3">
+                        <img src="{{item.product.imageURL}}" width='100px'>
+                    </div>
+                    <div class="col-3">
+                        {{item.product.name}}
+                    </div>
+                    <div class="col-2">
+                        ${{item.product.price}}
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <span class="input-group-btn border rounded-left bg-success">
+                                <button data-product="{{item.product.id}}" data-action="add" type="button"
+                                    class="btn p-0 mt-1 update-cart">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </span>
+                            <input type="text" class="form-control input-number" value="{{item.quantity}}">
+                            <span class="input-group-btn border rounded-right bg-danger">
+                                <button data-product="{{item.product.id}}" data-action="remove" type="button"
+                                    class="btn p-0 mt-1 update-cart">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        ${{item.get_total}}
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+    <div class="col-4">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h5>Cart totals</h5>
+            </li>
+            <li class="list-group-item">
+                <h6>Items: {{order.get_cart_items}}</h5>
+            </li>
+            <li class="list-group-item">
+                <h6>Total: ${{order.get_cart_total}}</h5>
+            </li>
+            <li class="list-group-item">
+                <a class='btn btn-success' href="#">Proceed to Checkout</a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock content %}
