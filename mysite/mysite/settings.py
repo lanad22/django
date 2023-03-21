@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-g2dvt#+-r(tc&q5-u+q8&6^sz%-8oj0m*p@%st&b+!6!0ae5sd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['52.53.179.186']
 
 
 # Application definition
@@ -129,3 +129,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
